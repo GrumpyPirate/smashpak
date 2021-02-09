@@ -5,7 +5,7 @@ import { Info } from 'react-feather';
 import styled from 'styled-components';
 
 import pkg from '../../../../package.json';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/hammer.png';
 import { appBg, gutter, palette } from '../../config/styles';
 import { OptionsContext, ResourcePackSize } from '../../context-providers/OptionsContext';
 import {
@@ -110,7 +110,11 @@ const Sidebar: FunctionComponent = () => {
                   <Info />
                 </FieldHelpButton>
                 <FieldHelpText>
-                  The current size/resolution of the source files in your resource pack.
+                  <p>The resolution of the source files in your resource pack.</p>
+                  <p>
+                    {pkg.productName} will attempt to detect this when you select the source
+                    directory.
+                  </p>
                 </FieldHelpText>
               </FieldHelp>
               <Select
