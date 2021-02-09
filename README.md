@@ -13,6 +13,11 @@
 - Allow MC version customisation
   - Create pack.mcmeta
   - Populate zip name with MC version
+- Unit tests
+- Integration tests
+- Automated releases/builds
+- Commit linting
 
-### Long-term
+### Mid/long-term
 - Remove `gulp` dependency
+- Less sucky UI. Grape is so 2003
