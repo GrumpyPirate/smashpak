@@ -5,15 +5,20 @@
   "description": "A Minecraft resource pack resizer tool",
   "main": "dist/index.js",
   "homepage": "./",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:GrumpyPirate/smashpak.git"
+  },
   "scripts": {
     "clean": "rm -rf .cache dist/",
     "dev:start-app": "NODE_ENV=development parcel src/renderer/index.html -p 3000",
     "dev:start-electron": "NODE_ENV=development parcel build src/main/index.ts --no-minify --target electron && electron .",
-    "dev": "NODE_ENV=development concurrently \"BROWSER=none npm run dev:start-app\" \"wait-on http://localhost:3000 && npm run dev:start-electron\"",
+    "dev": "NODE_ENV=development concurrently \"BROWSER=none yarn dev:start-app\" \"wait-on http://localhost:3000 && yarn dev:start-electron\"",
     "build:app": "parcel build src/renderer/index.html --public-url ./",
-    "build:electron": "parcel build src/main/index.ts --target electron && electron-builder -m",
-    "build": "npm run clean && npm run build:app && npm run build:electron",
-    "test": "jest"
+    "build:electron": "parcel build src/main/index.ts --target electron && electron-builder",
+    "build": "yarn clean && yarn build:app && yarn build:electron",
+    "test": "jest",
+    "postinstall": "electron-builder install-app-deps"
   },
   "keywords": [],
   "author": {
@@ -77,6 +82,7 @@
     "electron": "^11.2.3",
     "electron-builder": "^22.9.1",
     "electron-devtools-installer": "^3.1.1",
+    "electron-rebuild": "^2.3.5",
     "eslint": "^7.19.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^7.2.0",
@@ -103,24 +109,30 @@
   },
   "build": {
     "appId": "com.grumpypirate.smashpak",
+    "publish": "github",
     "asar": false,
     "files": [
       "src/main/index.ts",
-      "src/renderer/assets/images/logo.png",
+      "src/renderer/assets/images/hammer.png",
       "dist/**/*"
     ],
     "mac": {
       "target": "dmg",
-      "icon": "src/renderer/assets/images/logo.png"
+      "icon": "src/renderer/assets/images/hammer.png"
     },
     "win": {
       "target": "nsis",
-      "icon": "src/renderer/assets/images/logo.png"
+      "icon": "src/renderer/assets/images/hammer.png"
     },
     "linux": {
       "target": "deb",
-      "icon": "src/renderer/assets/images/logo.png",
+      "icon": "src/renderer/assets/images/hammer.png",
       "category": "Development"
     }
+  },
+  "binary": {
+    "napi_versions": [
+      3
+    ]
   }
 }
