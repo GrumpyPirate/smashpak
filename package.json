@@ -109,7 +109,6 @@
   },
   "build": {
     "appId": "com.grumpypirate.smashpak",
-    "publish": "github",
     "asar": false,
     "files": [
       "src/main/index.ts",
@@ -129,10 +128,5 @@
       "icon": "src/renderer/assets/images/hammer.png",
       "category": "Development"
     }
-  },
-  "binary": {
-    "napi_versions": [
-      3
-    ]
   }
 }
