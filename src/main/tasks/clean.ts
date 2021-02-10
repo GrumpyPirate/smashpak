@@ -4,7 +4,7 @@ import rimraf from 'rimraf';
 
 const clean = (outputDir: string): Promise<void> =>
   new Promise((resolve) => {
-    if (fs.statSync(outputDir).isDirectory()) {
+    if (fs.existsSync(outputDir) && fs.statSync(outputDir).isDirectory()) {
       rimraf(outputDir, () => {
         resolve();
       });

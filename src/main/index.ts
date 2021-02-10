@@ -129,6 +129,11 @@ ipcMain.on(
   ) => {
     await clean(outDir);
 
+    // Create the outDir, if it doesn't currently exist
+    if (!fs.existsSync(outDir) || !fs.statSync(outDir).isDirectory()) {
+      fs.mkdirSync(outDir);
+    }
+
     await optimise({
       initialSize,
       outDir,
