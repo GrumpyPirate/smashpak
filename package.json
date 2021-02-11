@@ -13,10 +13,10 @@
     "clean": "rm -rf .cache dist/",
     "dev:start-app": "NODE_ENV=development parcel src/renderer/index.html -p 3000",
     "dev:start-electron": "NODE_ENV=development parcel build src/main/index.ts --no-minify --target electron && electron .",
-    "dev": "NODE_ENV=development concurrently \"BROWSER=none yarn dev:start-app\" \"wait-on http://localhost:3000 && yarn dev:start-electron\"",
+    "dev": "NODE_ENV=development concurrently \"BROWSER=none npm run dev:start-app\" \"wait-on http://localhost:3000 && npm run dev:start-electron\"",
     "build:app": "parcel build src/renderer/index.html --public-url ./",
     "build:electron": "parcel build src/main/index.ts --target electron && electron-builder",
-    "build": "yarn clean && yarn build:app && yarn build:electron",
+    "build": "npm run clean && npm run build:app && npm run build:electron",
     "test": "jest",
     "postinstall": "electron-builder install-app-deps"
   },
@@ -58,6 +58,8 @@
     "@babel/core": "^7.12.13",
     "@babel/preset-env": "^7.12.13",
     "@babel/preset-react": "^7.12.13",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/gulp": "^4.0.8",
     "@types/gulp-filter": "^3.0.33",
@@ -78,7 +80,9 @@
     "autoprefixer": "^10.2.4",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
+    "commitizen": "^4.2.3",
     "concurrently": "^5.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "electron": "^11.2.3",
     "electron-builder": "^22.9.1",
     "electron-devtools-installer": "^3.1.1",
@@ -127,6 +131,11 @@
       "target": "deb",
       "icon": "src/renderer/assets/images/hammer.png",
       "category": "Development"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
   }
 }
