@@ -1,0 +1,52 @@
+name: Create release and build apps per-platform
+on:
+  push:
+    tags:
+      - "v*.*.*"
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  create-release:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+  build:
+    needs: [create-release]
+    name: Build for ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - name: MacOS
+            os: macos-latest
+            artifact_glob: dist/*.dmg
+            asset_name: smashpak-${{ github.ref }}
+          - name: Windows
+            os: windows-latest
+            artifact_glob: dist/*.exe
+            asset_name: smashpak-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: "14"
+      - uses: c-hive/gha-npm-cache@v1
+      - name: Install NPM dependencies
+        run: npm ci
+      - name: Build App
+        run: npm run build
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file_glob: true
+          file: ${{ matrix.artifact_glob }}
+          asset_name: ${{ matrix.asset_name }}
+          tag: ${{ github.ref }}
