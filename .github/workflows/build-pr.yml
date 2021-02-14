@@ -1,0 +1,25 @@
+name: Build apps per-platform
+on: pull_request
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  build:
+    name: Build for ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - name: MacOS
+            os: macos-latest
+          - name: Windows
+            os: windows-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: "14"
+      - uses: c-hive/gha-npm-cache@v1
+      - name: Install NPM dependencies
+        run: npm ci
+      - name: Build App
+        run: npm run build
