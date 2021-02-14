@@ -137,10 +137,10 @@ const WorkArea: FunctionComponent = () => {
 
   const publishSelectSourceDir = useIPCMessageTopic<
     void,
-    [selectedDirectory: string, detectedInitialResolution?: number]
-  >('select-source-directory', ([selectedDirectory, detectedInitialResolution]) => {
+    [selectedDirectory: string, defaultOutDir: string, detectedInitialResolution?: number]
+  >('select-source-directory', ([selectedDirectory, defaultOutDir, detectedInitialResolution]) => {
     if (selectedDirectory) {
-      setOptions({ sourceDir: selectedDirectory });
+      setOptions({ sourceDir: selectedDirectory, outDir: defaultOutDir });
     }
 
     setOptions({
