@@ -75,7 +75,7 @@ ipcMain.on('select-source-directory', async (event) => {
     });
 
     if (canceled) {
-      event.reply('select-source-directory', ['', undefined]);
+      event.reply('select-source-directory', ['', '', undefined]);
     } else {
       let detectedInitialResolution;
 
@@ -83,12 +83,17 @@ ipcMain.on('select-source-directory', async (event) => {
       const [firstMatchedTexturePath] = glob.sync(
         `${selectedDirectory}/**/textures/{blocks,items}/**/*.png`,
       );
+      const defaultOutputDir = path.join(selectedDirectory, '..', 'size-packs');
 
       if (firstMatchedTexturePath) {
         detectedInitialResolution = imageSize(firstMatchedTexturePath).width;
       }
 
-      event.reply('select-source-directory', [selectedDirectory, detectedInitialResolution]);
+      event.reply('select-source-directory', [
+        selectedDirectory,
+        defaultOutputDir,
+        detectedInitialResolution,
+      ]);
     }
   }
 });
