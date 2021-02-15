@@ -1,7 +1,7 @@
 {
   "name": "smashpak",
   "productName": "Smashpak",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Minecraft resource pack resizer tool",
   "main": "dist/index.js",
   "homepage": "./",
